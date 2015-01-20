@@ -110,7 +110,7 @@ function initialize() {
             function contentString() {
                 var content = '';
                 for (var key in tcenter) {
-                    if (key != "_id")
+                   if ((key != "_id")&&(key != "Marker"))
                         content += '<dt>' + key + '</dt><dd>' + tcenter[key] + '</dd>';
                 }
                 return content
