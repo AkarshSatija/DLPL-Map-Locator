@@ -33,7 +33,25 @@ function initialize() {
     ds.fetch({
       success: function() {
         this.each(function(row) {
-          loadMarker(row);
+          loadMarker(row, "http://www.google.com/mapfiles/markerA.png");
+        });
+      },
+      error: function() {
+        console.log("Are you sure you are connected to the internet?");
+      }
+    });
+
+    var ds2 = new Miso.Dataset({
+      importer: Miso.Dataset.Importers.GoogleSpreadsheet,
+      parser: Miso.Dataset.Parsers.GoogleSpreadsheet,
+      key: "1Le0fp1BbyejDQhAIxgyJvl1ON_sa8tkIVKsii4fZ_ro",
+      worksheet: "5"
+    });
+
+    ds2.fetch({
+      success: function() {
+        this.each(function(row) {
+          loadMarker(row, "http://www.google.com/mapfiles/markerB.png");
         });
       },
       error: function() {
@@ -42,12 +60,13 @@ function initialize() {
     });
 
 
-    function loadMarker(tcenter) {
+    function loadMarker(tcenter,marker) {
       var myLatlng = new google.maps.LatLng(tcenter.Latitude, tcenter.Longitude);
 
       function contentString() {
         var content = '';
         for (var key in tcenter) {
+          if(key!="_id")
           content += '<dt>' + key + '</dt><dd>' + tcenter[key] + '</dd>';
         }
         return content
@@ -55,7 +74,7 @@ function initialize() {
       var contentString = '<div id="content">' +
         '<div id="siteNotice">' +
         '</div>' +
-        '<h3>' + tcenter['PIA name'] + '</h3>' +
+        '<h3>' + tcenter['Name'] + '</h3>' +
         '<dl class="dl-horizontal">' + contentString() + '</dl>' +
         '</div>' +
         '</div>';
@@ -66,12 +85,22 @@ function initialize() {
         position: myLatlng,
         map: map,
         animation: google.maps.Animation.DROP,
-        content: contentString
-
+        content: contentString,
+        icon:marker
       });
       oms.addMarker(marker);
+      google.maps.event.addListener(marker, 'click', toggleBounce);
+function toggleBounce() {
 
+  if (marker.getAnimation() != null) {
+    marker.setAnimation(null);
+  } else {
+    marker.setAnimation(google.maps.Animation.BOUNCE);
+  }
+}
     }
+
+
 
 
 
