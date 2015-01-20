@@ -1,47 +1,89 @@
 function initialize() {
 
-    // Assign varibales and options
-    var mapOptions = {
-      center: {
-        lat: 21.0000,
-        lng: 78.0000
-      },
-      zoom: 5
-    };
-    var infowindow = new google.maps.InfoWindow();
-    var map = new google.maps.Map(document.getElementById('map'), mapOptions);
-    // Overalapping marker Assign
-    var oms = new OverlappingMarkerSpiderfier(map);
+        // Assign varibales and options
+        var mapOptions = {
+            center: {
+                lat: 28.613,
+                lng: 77.209
+            },
+            zoom: 11
+        };
+        var infowindow = new google.maps.InfoWindow();
+        var map = new google.maps.Map(document.getElementById('map'), mapOptions);
+        // Overalapping marker Assign
+        var oms = new OverlappingMarkerSpiderfier(map);
 
-    oms.addListener('click', function(marker, event) {
-      infowindow.setContent(marker.content);
-      infowindow.open(map, marker);
-    });
-
-    oms.addListener('spiderfy', function(markers) {
-      infowindow.close();
-    });
-
-
-    var ds = new Miso.Dataset({
-      importer: Miso.Dataset.Importers.GoogleSpreadsheet,
-      parser: Miso.Dataset.Parsers.GoogleSpreadsheet,
-      key: "1Le0fp1BbyejDQhAIxgyJvl1ON_sa8tkIVKsii4fZ_ro",
-      worksheet: "1"
-    });
-
-    ds.fetch({
-      success: function() {
-        this.each(function(row) {
-          loadMarker(row, "http://www.google.com/mapfiles/markerA.png");
+        oms.addListener('click', function(marker, event) {
+            infowindow.setContent(marker.content);
+            infowindow.open(map, marker);
         });
-      },
-      error: function() {
-        console.log("Are you sure you are connected to the internet?");
-      }
-    });
 
-    var ds2 = new Miso.Dataset({
+        oms.addListener('spiderfy', function(markers) {
+            infowindow.close();
+        });
+
+
+
+
+        var sheets = {
+            "1": {
+                "name": "type1",
+                "marker": "http://www.google.com/mapfiles/markerA.png"
+            },
+            "2": {
+                "name": "Lab",
+                "marker": "http://www.google.com/mapfiles/markerB.png"
+            },
+            "3": {
+                "name": "Co.owned PSC",
+                "marker": "http://www.google.com/mapfiles/markerC.png"
+            },
+            "4": {
+                "name": "collection center",
+                "marker": "http://www.google.com/mapfiles/markerD.png"
+            },
+            "5": {
+                "name": "test2",
+                "marker": "http://www.google.com/mapfiles/markerE.png"
+            },
+            "6": {
+                "name": "HLM-M&A",
+                "marker": "http://www.google.com/mapfiles/markerF.png"
+            },
+            "7": {
+                "name": "Pick up Points",
+                "marker": "http://www.google.com/mapfiles/markerG.png"
+            }
+        };
+
+        for (var key in sheets) {
+            //console.log(sheets[key].marker)
+
+
+
+            var ds = new Miso.Dataset({
+                importer: Miso.Dataset.Importers.GoogleSpreadsheet,
+                parser: Miso.Dataset.Parsers.GoogleSpreadsheet,
+                key: "1Le0fp1BbyejDQhAIxgyJvl1ON_sa8tkIVKsii4fZ_ro",
+                worksheet: key
+            });
+
+            ds.fetch({
+                success: function() {
+                    this.each(function(row) {
+                        loadMarker(row, key);
+                    });
+
+                },
+                error: function() {
+                    console.log("Are you sure you are connected to the internet?");
+                }
+            });
+        }
+
+
+
+        /* var ds2 = new Miso.Dataset({
       importer: Miso.Dataset.Importers.GoogleSpreadsheet,
       parser: Miso.Dataset.Parsers.GoogleSpreadsheet,
       key: "1Le0fp1BbyejDQhAIxgyJvl1ON_sa8tkIVKsii4fZ_ro",
@@ -58,54 +100,44 @@ function initialize() {
         console.log("Are you sure you are connected to the internet?");
       }
     });
+*/
+
+        function loadMarker(tcenter, key) {
+          console.log(tcenter);
+          markericon="http://www.google.com/mapfiles/markerG.png";
+            var myLatlng = new google.maps.LatLng(tcenter.Latitude, tcenter.Longitude);
+
+            function contentString() {
+                var content = '';
+                for (var key in tcenter) {
+                    if (key != "_id")
+                        content += '<dt>' + key + '</dt><dd>' + tcenter[key] + '</dd>';
+                }
+                return content
+            }
+            var contentString = '<div id="content">' +
+                '<div id="siteNotice">' +
+                '</div>' +
+                '<h3>' + tcenter['Name'] + '</h3>' +
+                '<dl class="dl-horizontal">' + contentString() + '</dl>' +
+                '</div>' +
+                '</div>';
 
 
-    function loadMarker(tcenter,marker) {
-      var myLatlng = new google.maps.LatLng(tcenter.Latitude, tcenter.Longitude);
-
-      function contentString() {
-        var content = '';
-        for (var key in tcenter) {
-          if(key!="_id")
-          content += '<dt>' + key + '</dt><dd>' + tcenter[key] + '</dd>';
+            // Add Markers
+            var marker = new google.maps.Marker({
+                position: myLatlng,
+                map: map,
+                animation: google.maps.Animation.DROP,
+                content: contentString,
+                icon: "assets/img/markers/"+tcenter.Marker
+            });
+            oms.addMarker(marker);
+            
+            
         }
-        return content
-      }
-      var contentString = '<div id="content">' +
-        '<div id="siteNotice">' +
-        '</div>' +
-        '<h3>' + tcenter['Name'] + '</h3>' +
-        '<dl class="dl-horizontal">' + contentString() + '</dl>' +
-        '</div>' +
-        '</div>';
 
-
-      // Add Markers
-      var marker = new google.maps.Marker({
-        position: myLatlng,
-        map: map,
-        animation: google.maps.Animation.DROP,
-        content: contentString,
-        icon:marker
-      });
-      oms.addMarker(marker);
-      google.maps.event.addListener(marker, 'click', toggleBounce);
-function toggleBounce() {
-
-  if (marker.getAnimation() != null) {
-    marker.setAnimation(null);
-  } else {
-    marker.setAnimation(google.maps.Animation.BOUNCE);
-  }
-}
-    }
-
-
-
-
-
-
-  } // initialize
+    } // initialize
 var map = google.maps.event.addDomListener(window, 'load', initialize);
 
 
