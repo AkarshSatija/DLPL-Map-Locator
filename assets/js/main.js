@@ -118,7 +118,7 @@ function initialize() {
             var contentString = '<div id="content">' +
                 '<div id="siteNotice">' +
                 '</div>' +
-                '<h3>' + tcenter['Name'] + '</h3>' +
+                /*'<h3>' + tcenter['Name'] + '</h3>' +*/
                 '<dl class="dl-horizontal">' + contentString() + '</dl>' +
                 '</div>' +
                 '</div>';
