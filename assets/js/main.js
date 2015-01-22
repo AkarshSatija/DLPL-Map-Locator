@@ -28,31 +28,24 @@ function initialize() {
         console.log(filter == undefined);
 
         var sheets = {
-            /*"1": {
-                "name": "type1",
-                "marker": "http://www.google.com/mapfiles/markerA.png"
-            },*/
-            "2": {
+            
+            "1": {
                 "name": "Lab",
                 "marker": "http://www.google.com/mapfiles/markerB.png"
             },
-            "3": {
+            "2": {
                 "name": "Co.owned PSC",
                 "marker": "http://www.google.com/mapfiles/markerC.png"
             },
-            "4": {
+            "3": {
                 "name": "collection center",
                 "marker": "http://www.google.com/mapfiles/markerD.png"
             },
-            /*"5": {
-                "name": "test2",
-                "marker": "http://www.google.com/mapfiles/markerE.png"
-            },*/
-            "6": {
+            "4": {
                 "name": "HLM-M&A",
                 "marker": "http://www.google.com/mapfiles/markerF.png"
             },
-            "7": {
+            "5": {
                 "name": "Pick up Points",
                 "marker": "http://www.google.com/mapfiles/markerG.png"
             }
