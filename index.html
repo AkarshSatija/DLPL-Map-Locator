@@ -2,38 +2,52 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <link rel="stylesheet" href="assets/css/bootstrap.min.css">
-  <link rel="stylesheet" href="assets/css/style.css">
-  <title>DLPL</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <title>DLPL</title>
 </head>
 
 <body>
-  <!-- Fixed navbar -->
-  <nav class="navbar navbar-default navbar-fixed-top ddu-nav">
-    <div class="container-fluid">
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        <a class="navbar-brand" href="#">
-          <img style="max-height:100%" src="assets/img/logo.png" alt="">
-        </a>
-      </div>
-      <div id="navbar" class="navbar-collapse collapse">
-        <ul class="nav navbar-nav">
-          <li><a>DLPL Centers Locator</a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </nav>
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-default navbar-fixed-top ddu-nav">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">
+                    <img style="max-height:100%" src="assets/img/logo.png" alt="">
+                </a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li><a>DLPL Centers Locator</a>
+                    </li>
+                    <li>
+                       <form method="GET">
+                          <select class="filter" name="filter">
+                            <option>Select</option>
+                            <option value="2">Lab</option>
+                            <option value="3">Co.owned PSC</option>
+                            <option value="4">collection center</option>
+                            <option value="6">HLM-M&A</option>
+                            <option value="7">Pick up Points</option>
+                        </select>
+                        <button onclick="submit()">Filter</button>
+                       </form>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+    </nav>
 
 
-  <div id="map"></div>
+    <div id="map"></div>
 
 
 
@@ -44,29 +58,29 @@
 
 
 
-  <script src="assets/js/jquery.min.js"></script>
-  <script src="assets/js/bootstrap.min.js"></script>
-  <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBLwI8pwvcF5pS_bX4kwKohD4-w7y-LyNs"></script>
-  <script src="assets/js/oms.min.js"></script>
-  <script src="assets/js/miso.ds.deps.ie.min.0.4.0.js"></script>
-  <script src="assets/js/main.js"></script>
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBLwI8pwvcF5pS_bX4kwKohD4-w7y-LyNs"></script>
+    <script src="assets/js/oms.min.js"></script>
+    <script src="assets/js/miso.ds.deps.ie.min.0.4.0.js"></script>
+    <script src="assets/js/main.js"></script>
 
-  <script>
- /* (function(i, s, o, g, r, a, m) {
-    i['GoogleAnalyticsObject'] = r;
-    i[r] = i[r] || function() {
-      (i[r].q = i[r].q || []).push(arguments)
-    }, i[r].l = 1 * new Date();
-    a = s.createElement(o),
-      m = s.getElementsByTagName(o)[0];
-    a.async = 1;
-    a.src = g;
-    m.parentNode.insertBefore(a, m)
-  })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+    <script>
+    /* (function(i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r;
+        i[r] = i[r] || function() {
+          (i[r].q = i[r].q || []).push(arguments)
+        }, i[r].l = 1 * new Date();
+        a = s.createElement(o),
+          m = s.getElementsByTagName(o)[0];
+        a.async = 1;
+        a.src = g;
+        m.parentNode.insertBefore(a, m)
+      })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
 
-  ga('create', 'UA-54269439-3', 'auto');
-  ga('send', 'pageview');*/
-  </script>
+      ga('create', 'UA-54269439-3', 'auto');
+      ga('send', 'pageview');*/
+    </script>
 
 
 </body>

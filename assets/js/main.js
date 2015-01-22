@@ -22,14 +22,16 @@ function initialize() {
             infowindow.close();
         });
 
+        var filter;
+        console.log(filter = getUrlParameter("filter"));
 
-
+        console.log(filter == undefined);
 
         var sheets = {
-            "1": {
+            /*"1": {
                 "name": "type1",
                 "marker": "http://www.google.com/mapfiles/markerA.png"
-            },
+            },*/
             "2": {
                 "name": "Lab",
                 "marker": "http://www.google.com/mapfiles/markerB.png"
@@ -42,10 +44,10 @@ function initialize() {
                 "name": "collection center",
                 "marker": "http://www.google.com/mapfiles/markerD.png"
             },
-            "5": {
+            /*"5": {
                 "name": "test2",
                 "marker": "http://www.google.com/mapfiles/markerE.png"
-            },
+            },*/
             "6": {
                 "name": "HLM-M&A",
                 "marker": "http://www.google.com/mapfiles/markerF.png"
@@ -55,10 +57,13 @@ function initialize() {
                 "marker": "http://www.google.com/mapfiles/markerG.png"
             }
         };
+        
 
         for (var key in sheets) {
             //console.log(sheets[key].marker)
-
+            if ((filter != undefined) && ((filter != key))) {
+                continue;
+            }
 
 
             var ds = new Miso.Dataset({
@@ -103,14 +108,14 @@ function initialize() {
 */
 
         function loadMarker(tcenter, key) {
-          console.log(tcenter);
-          markericon="http://www.google.com/mapfiles/markerG.png";
+            //console.log(tcenter);
+            markericon = "http://www.google.com/mapfiles/markerG.png";
             var myLatlng = new google.maps.LatLng(tcenter.Latitude, tcenter.Longitude);
 
             function contentString() {
                 var content = '';
                 for (var key in tcenter) {
-                   if ((key != "_id")&&(key != "Marker"))
+                    if ((key != "_id") && (key != "Marker"))
                         content += '<dt>' + key + '</dt><dd>' + tcenter[key] + '</dd>';
                 }
                 return content
@@ -130,19 +135,27 @@ function initialize() {
                 map: map,
                 animation: google.maps.Animation.DROP,
                 content: contentString,
-                icon: "assets/img/markers/"+tcenter.Marker
+                icon: "assets/img/markers/" + tcenter.Marker
             });
             oms.addMarker(marker);
-            
-            
+
+
         }
 
     } // initialize
 var map = google.maps.event.addDomListener(window, 'load', initialize);
 
 
-
-
+function getUrlParameter(sParam) {
+    var sPageURL = window.location.search.substring(1);
+    var sURLVariables = sPageURL.split('&');
+    for (var i = 0; i < sURLVariables.length; i++) {
+        var sParameterName = sURLVariables[i].split('=');
+        if (sParameterName[0] == sParam) {
+            return sParameterName[1];
+        }
+    }
+}
 
 
 
