@@ -54,7 +54,7 @@ function initialize() {
 
         for (var key in sheets) {
             //console.log(sheets[key].marker)
-            if ((filter != undefined) && ((filter != key))) {
+            if ((filter != undefined) && (filter != key)  && (filter != 0)) {
                 continue;
             }
 
